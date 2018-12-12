@@ -32,6 +32,7 @@ export default class DropdownAlert extends Component {
     messageNumOfLines: PropTypes.number,
     onClose: PropTypes.func,
     onCancel: PropTypes.func,
+    onPress: PropTypes.func,
     showCancel: PropTypes.bool,
     tapToCloseEnabled: PropTypes.bool,
     panResponderEnabled: PropTypes.bool,
@@ -54,6 +55,7 @@ export default class DropdownAlert extends Component {
     renderMessage: PropTypes.func,
   };
   static defaultProps = {
+    onPress: null,
     onClose: null,
     onCancel: null,
     closeInterval: 4000,
@@ -258,6 +260,11 @@ export default class DropdownAlert extends Component {
     if (action == undefined) {
       action = 'programmatic';
     }
+    var onPress = this.props.onPress;
+    if(onPress){
+      onPress();
+    }
+
     var onClose = this.props.onClose;
     if (action == 'cancel') {
       onClose = this.props.onCancel;
