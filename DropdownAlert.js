@@ -260,11 +260,6 @@ export default class DropdownAlert extends Component {
     if (action == undefined) {
       action = 'programmatic';
     }
-    var onPress = this.props.onPress;
-    if(onPress){
-      onPress();
-    }
-
     var onClose = this.props.onClose;
     if (action == 'cancel') {
       onClose = this.props.onCancel;
@@ -480,7 +475,10 @@ export default class DropdownAlert extends Component {
         <Animated.View ref={ref => this.mainView = ref} {...this._panResponder.panHandlers} style={[wrapperStyle, this.props.wrapperStyle]}>
           <TouchableOpacity
             activeOpacity={!this.props.tapToCloseEnabled || showCancel ? 1 : 0.95}
-            onPress={!this.props.tapToCloseEnabled ? null : () => this.close('tap')}
+            onPress={!this.props.tapToCloseEnabled ? null : () => {
+              this.props.onPress?this.props.onPress():null;
+              this.close('tap');
+            }}
             disabled={!this.props.tapToCloseEnabled}
             onLayout={event => this.onLayoutEvent(event)}
           >
